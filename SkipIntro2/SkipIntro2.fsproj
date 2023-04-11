@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Core" Version="5.*" />
+        <PackageReference Include="TromboneChamp.GameLibs" Version="1.9.9" />
+        <PackageReference Include="TromboneChamp.BaboonAPI" Version="2.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="Patches.fs" />
+        <Compile Include="SkipIntro.fs" />
+    </ItemGroup>
+
+</Project>

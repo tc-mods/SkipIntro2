@@ -1,0 +1,35 @@
+﻿namespace SkipIntro2
+
+open BaboonAPI.Hooks.Initializer
+open BepInEx
+open BepInEx.Configuration
+open HarmonyLib
+open SkipIntro2.Patch
+
+[<BepInPlugin("ch.offbeatwit.skipintro", "SkipIntro", "1.0.0")>]
+[<BepInDependency("ch.offbeatwit.baboonapi.plugin", "2.0.0")>]
+type SkipIntroPlugin() =
+    inherit BaseUnityPlugin()
+
+    let harmony = Harmony("ch.offbeatwit.skipintro.harmony")
+
+    member this.Awake() =
+        GameInitializationEvent.EVENT.Register this
+
+        let saveSlotConfig =
+            this.Config.Bind(
+                "Default",
+                "SaveSlot",
+                0,
+                ConfigDescription("Save slot to load", AcceptableValueRange(0, 2))
+            )
+
+        SaveSlotControllerPatch.saveIndex <- saveSlotConfig.Value
+
+    member this.TryInitialize() =
+        harmony.PatchAll typeof<BrandingControllerPatch>
+        harmony.PatchAll typeof<SaveSlotControllerPatch>
+
+    interface GameInitializationEvent.Listener with
+        member this.Initialize() =
+            GameInitializationEvent.attempt this.Info this.TryInitialize
