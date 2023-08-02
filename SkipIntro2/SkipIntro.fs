@@ -15,6 +15,12 @@ type SkipIntroPlugin() =
 
     member this.Awake() =
         GameInitializationEvent.EVENT.Register this
+        
+        try
+            harmony.PatchAll typeof<BrandingControllerPatch>
+        with exc ->
+            this.Logger.LogError "Could not patch BrandingController, oh no"
+            this.Logger.LogError exc
 
         let saveSlotConfig =
             this.Config.Bind(
@@ -27,7 +33,6 @@ type SkipIntroPlugin() =
         SaveSlotControllerPatch.saveIndex <- saveSlotConfig.Value
 
     member this.TryInitialize() =
-        harmony.PatchAll typeof<BrandingControllerPatch>
         harmony.PatchAll typeof<SaveSlotControllerPatch>
 
     interface GameInitializationEvent.Listener with
