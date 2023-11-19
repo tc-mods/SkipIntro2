@@ -1,14 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>TromboneChamp.SkipIntro</PackageId>
+        <Title>SkipIntro</Title>
+        <Description>SkipIntro</Description>
+        <Version>2.0.0</Version>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/tc-mods/SkipIntro2</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="BepInEx.Core" Version="5.*" />
-        <PackageReference Include="TromboneChamp.GameLibs" Version="1.12.0" />
-        <PackageReference Include="TromboneChamp.BaboonAPI" Version="2.4.1" />
+        <PackageReference Include="TromboneChamp.GameLibs" Version="1.16.0" />
+        <PackageReference Include="TromboneChamp.BaboonAPI" Version="2.5.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -16,4 +25,15 @@
         <Compile Include="SkipIntro.fs" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ThunderstoreAssets Include="$(SolutionDir)thunderstore\*.*" />
+    </ItemGroup>
+
+    <Target Name="ThunderstoreZip" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+        <Delete Files="$(OutDir)thunderstore" />
+        <Delete Files="$(OutDir)$(ProjectName)-thunderstore.zip" />
+        <Copy SourceFiles="@(ThunderstoreAssets)" DestinationFolder="$(OutDir)thunderstore" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(OutDir)thunderstore/BepInEx/plugins" />
+        <ZipDirectory DestinationFile="$(OutDir)$(ProjectName)-thunderstore.zip" SourceDirectory="$(OutDir)thunderstore" />
+    </Target>
 </Project>

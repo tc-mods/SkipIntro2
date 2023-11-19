@@ -6,8 +6,8 @@ open BepInEx.Configuration
 open HarmonyLib
 open SkipIntro2.Patch
 
-[<BepInPlugin("ch.offbeatwit.skipintro", "SkipIntro", "1.0.0")>]
-[<BepInDependency("ch.offbeatwit.baboonapi.plugin", "2.0.0")>]
+[<BepInPlugin("SkipIntro", "SkipIntro", "2.0.0")>]
+[<BepInDependency("ch.offbeatwit.baboonapi.plugin", "2.5.0")>]
 type SkipIntroPlugin() =
     inherit BaseUnityPlugin()
 
@@ -15,7 +15,7 @@ type SkipIntroPlugin() =
 
     member this.Awake() =
         GameInitializationEvent.EVENT.Register this
-        
+
         try
             harmony.PatchAll typeof<BrandingControllerPatch>
         with exc ->
