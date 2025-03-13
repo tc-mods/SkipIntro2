@@ -6,8 +6,8 @@ open BepInEx.Configuration
 open HarmonyLib
 open SkipIntro2.Patch
 
-[<BepInPlugin("SkipIntro", "SkipIntro", "2.0.0")>]
-[<BepInDependency("ch.offbeatwit.baboonapi.plugin", "2.5.0")>]
+[<BepInPlugin("SkipIntro", "SkipIntro", "2.0.1")>]
+[<BepInDependency("ch.offbeatwit.baboonapi.plugin", "2.8.0")>]
 type SkipIntroPlugin() =
     inherit BaseUnityPlugin()
 

@@ -1,10 +1,10 @@
 {
     "name": "SkipIntro",
-    "version_number": "2.0.0",
+    "version_number": "2.0.1",
     "website_url": "https://github.com/tc-mods/SkipIntro2",
     "description": "Boot straight to the main menu. Needs configuration if you're on 2nd or 3rd save slot!",
     "dependencies": [
         "BepInEx-BepInExPack_TromboneChamp-5.4.21",
-        "TromboneChamps-BaboonAPI-2.5.0"
+        "TromboneChamps-BaboonAPI-2.8.0"
     ]
 }

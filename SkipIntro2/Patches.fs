@@ -5,13 +5,16 @@ open BaboonAPI.Hooks.Initializer
 open HarmonyLib
 open UnityEngine.SceneManagement
 
-[<HarmonyPatch(typeof<BrandingController>, "Start")>]
+[<HarmonyPatch(typeof<BrandingController>, "doHolyWowAnim")>]
 type BrandingControllerPatch() =
-    static member Postfix(__instance: BrandingController) =
+    static member Prefix(__instance: BrandingController) =
         // Only skip if BaboonAPI successfully initialized.
         if BaboonInitializer.IsInitialized() then
             __instance.CancelInvoke()
             __instance.Invoke("killandload", 0f)
+            false
+        else
+            true
 
 [<HarmonyPatch(typeof<SaveSlotController>, "Start")>]
 type SaveSlotControllerPatch() =
@@ -29,5 +32,6 @@ type SaveSlotControllerPatch() =
 
         mi.Invoke(__instance, null) |> ignore
         AchievementSetter.checkAllCheevos ()
+        SaverLoader.loadAllSaveHighScores ()
         SceneManager.LoadScene("home")
         ()
